@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/data/jpa
+						http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+						http://www.springframework.org/schema/security
+						http://www.springframework.org/schema/security/spring-security-3.2.xsd						
+						">
+
+	<context:annotation-config />
+	<context:component-scan base-package="es.manzano.examenesticweb" />
+	<context:property-placeholder location="classpath*:examenesticweb.properties" />
+
+	<sec:authentication-manager alias="authenticationManager">
+		<sec:authentication-provider>
+<!-- 			<sec:jdbc-user-service data-source-ref="dataSource" -->
+<!-- 				users-by-username-query="SELECT id_ as username, pwd_ as password, true as enabled FROM user where id_=?" -->
+<!-- 				authorities-by-username-query="SELECT user_id_ as username, group_id_ as authorities  FROM act_id_membership where user_id_ =?" /> -->
+				
+			<sec:user-service>
+            	<sec:user name="manzano" password="manzano"  authorities="ROLE_USER" />
+        	</sec:user-service>				
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+
+	<sec:http auto-config="true" use-expressions="true">
+		<sec:intercept-url pattern="/secure/**" access="isAuthenticated()" />
+		<sec:intercept-url pattern="/template/**" access="permitAll" />
+		<sec:intercept-url pattern="/pages/common/**" access="permitAll" />
+		<sec:intercept-url pattern="/javax.faces.resource/**" access="permitAll" />
+		<!-- <sec:intercept-url pattern="/**" access="permitAll"/> -->
+		<sec:intercept-url pattern="/login.xhtml" access="permitAll" />
+		<sec:form-login login-page="/login.xhtml"
+			default-target-url="/secure/index.xhtml" authentication-failure-url="/login.xhtml" />
+		<sec:logout logout-url="/logout" invalidate-session="true"
+			delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE"
+			logout-success-url="/login.xhtml"></sec:logout>
+	</sec:http>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
+		<property name="targetDataSource">
+			<bean class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+				<property name="driverClass" value="${jdbc.driverClass}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+</beans>
+
+
+

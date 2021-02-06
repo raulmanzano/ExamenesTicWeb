@@ -1,0 +1,65 @@
+<f:view xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:composition template="/template/common/commonOnlyCentral.xhtml">
+		<ui:define name="contentLeft">
+			<h:form>
+				<p:panelGrid columns="2" columnClasses="ui-grid-col-9,ui-grid-col-3"
+					layout="grid" styleClass="ui-panelgrid-blank">
+					<p:tabView>
+						<p:tab title="Tab 1 ">
+							<p:panel style="background: #d9d9d9;text-color: #999999; text-align:left;">
+							Esto puede ser un panel descriptivo de lo que hay en la tab
+							</p:panel>
+							<br/>
+							<p:panel id="tareas">								
+<!-- 								<p:dataTable value="#{indexViewBean.tasks}" var="elemento" -->
+<!-- 									width="100%" style="text-align: center;"> -->
+<!-- 																		<p:column> -->
+<!-- 										<f:facet name="header">Fecha</f:facet> -->
+<!-- 							#{elemento.getProcessVariables().get('fecha')} -->
+<!-- 						</p:column> -->
+									
+<!-- 									<p:column> -->
+<!-- 										<f:facet name="header">Trámite</f:facet> -->
+<!-- 							#{indexViewBean.getProcessDefinitionName(elemento)} -->
+<!-- 						</p:column>						 -->
+<!-- 															<p:column> -->
+<!-- 										<f:facet name="header">Asunto</f:facet> -->
+<!-- 							#{elemento.getProcessVariables().get('asunto')}							 -->
+<!-- 						</p:column>						 -->
+												
+<!-- 									<p:column> -->
+<!-- 										<f:facet name="header">Tarea</f:facet> -->
+<!-- 							#{elemento.name} -->
+<!-- 						</p:column> -->
+<!-- 									<p:column> -->
+<!-- 										<p:commandButton value="Completar" -->
+<!-- 											action="#{indexViewBean.complete(elemento)}" /> -->
+<!-- 									</p:column> -->
+<!-- 								</p:dataTable> -->
+							</p:panel>
+						</p:tab>
+					</p:tabView>
+
+					<p:panel header="Esto es un panel independiente">
+<!-- 						<p:dataTable value="#{indexViewBean.process}" var="v_process" style="text-align: center;" width="100%"> -->
+<!-- 							<p:column> -->
+<!-- 								<f:facet name="header">Trámite</f:facet> -->
+<!-- 							#{v_process.name} -->
+<!-- 						</p:column> -->
+<!-- 							<p:column>								 -->
+<!-- 								<p:commandButton value="Iniciar" -->
+<!-- 									action="#{indexViewBean.start(v_process.id)}" /> -->
+<!-- 							</p:column> -->
+<!-- 						</p:dataTable> -->
+					</p:panel>
+
+
+				</p:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</f:view>
